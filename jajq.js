@@ -9,6 +9,7 @@ const currentValueTextElement = document.querySelector("[data-current-value]")
 var currentValue = ""
 var previousValue = ""
 var operation = undefined
+var computed = false
 
 function clearAll() {
     currentValue = "";
@@ -17,10 +18,23 @@ function clearAll() {
 }
 
 function deleteNumber() {
+    if (currentValue.length > 0) {
+        currentValue = currentValue.substring(0, currentValue.length - 1)
+    } else {
+
+    }
 
 }
 
 function appendNumber(newNumber) {
+    if (computed === true) {
+        computed = false
+        currentValue = ""
+    } else {
+
+    }
+
+
     if (newNumber === ".") {
         if (currentValue.includes(".")) {
             
@@ -35,28 +49,48 @@ function appendNumber(newNumber) {
 }
 
 function compute() {
+    previousValueCut = previousValue.substring(0, previousValue.length-2)
+
     if (previousValue.length > 0 && currentValue.length > 0 && operation !== undefined) {
         switch (operation) {
             case "+":
-                currentValue = parseFloat(previousValue) + parseFloat(currentValue)
+                currentValue = parseFloat(previousValueCut) + parseFloat(currentValue)
                 previousValue = ""
+                break;
+            case "*":
+                currentValue = parseFloat(previousValueCut) * parseFloat(currentValue)
+                previousValue = ""
+                break;
+            case "-":
+                currentValue = parseFloat(previousValueCut) - parseFloat(currentValue)
+                previousValue = ""
+                break;
+            case "/":
+                currentValue = parseFloat(previousValueCut) / parseFloat(currentValue)
+                previousValue = ""
+                break;
+        operation = undefined
+        computed = true
         }
     }  else {
 
     }
-    operation = undefined
+
 
 }
 
 function chooseOperation(operationText) {
-    if (operation === undefined) {
+    if (operation === undefined && previousValue.length === 0 && currentValue.length > 0) {
         previousValue = currentValue + " " + operationText
         currentValue = ""
         operation = operationText
+    } else if (operation !== undefined && previousValue.length > 0 && currentValue.length === 0) {
+        previousValue
+        operation = operationText
+        
     } else {
-
+        
     }
-
 
     //previousValue = currentValue + " " + operationText
     //currentValue = ""
@@ -96,4 +130,9 @@ equalsButton.addEventListener('click', () =>{
     compute();
     updateDisplay();
 
+})
+
+deleteButton.addEventListener('click', () => {
+    deleteNumber();
+    updateDisplay();
 })
