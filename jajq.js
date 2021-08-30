@@ -15,10 +15,11 @@ function clearAll() {
     currentValue = "";
     previousValue = "";
     operation = undefined;
+    computed = false;
 }
 
 function deleteNumber() {
-    if (currentValue.length > 0) {
+    if (currentValue.length > 0 && computed === false) {
         currentValue = currentValue.substring(0, currentValue.length - 1)
     } else {
 
@@ -56,6 +57,7 @@ function compute() {
             case "+":
                 currentValue = parseFloat(previousValueCut) + parseFloat(currentValue)
                 
+                
                 break;
             case "*":
                 currentValue = parseFloat(previousValueCut) * parseFloat(currentValue)
@@ -70,6 +72,7 @@ function compute() {
                 
                 break;
         }
+        currentValue = currentValue.toString()
         operation = undefined;
         computed = true;
         previousValue = "";
@@ -90,13 +93,17 @@ function chooseOperation(operationText) {
         previousValue = previousValue.substring(0, previousValue.length-1) + operationText
         operation = operationText
         
+    } else if (operation !== undefined && previousValue.length > 0 && currentValue.length > 0) {
+        compute();
+        operation = operationText
+        previousValue = currentValue + " " + operationText
+        currentValue = ""
+
     } else {
         
     }
 
-    //previousValue = currentValue + " " + operationText
-    //currentValue = ""
-    //operation = operationText
+  
 
 }
 
