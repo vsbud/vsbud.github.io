@@ -55,23 +55,25 @@ function compute() {
         switch (operation) {
             case "+":
                 currentValue = parseFloat(previousValueCut) + parseFloat(currentValue)
-                previousValue = ""
+                
                 break;
             case "*":
                 currentValue = parseFloat(previousValueCut) * parseFloat(currentValue)
-                previousValue = ""
+                
                 break;
             case "-":
                 currentValue = parseFloat(previousValueCut) - parseFloat(currentValue)
-                previousValue = ""
+                
                 break;
             case "/":
                 currentValue = parseFloat(previousValueCut) / parseFloat(currentValue)
-                previousValue = ""
+                
                 break;
-        operation = undefined
-        computed = true
         }
+        operation = undefined;
+        computed = true;
+        previousValue = "";
+        
     }  else {
 
     }
@@ -85,7 +87,7 @@ function chooseOperation(operationText) {
         currentValue = ""
         operation = operationText
     } else if (operation !== undefined && previousValue.length > 0 && currentValue.length === 0) {
-        previousValue
+        previousValue = previousValue.substring(0, previousValue.length-1) + operationText
         operation = operationText
         
     } else {
